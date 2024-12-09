@@ -1,0 +1,42 @@
+import threading
+import requests
+from bs4 import BeautifulSoup
+
+class WebScraper:
+    def __init__(self, urls):
+        self.urls = urls
+        self.results = []
+        self.lock = threading.Lock()
+
+    def scrape_url(self, url):
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.content, 'html.parser')
+                title = soup.find('title').text if soup.find('title') else 'No Title Found'
+                with self.lock:
+                    self.results.append((url, title))
+            else:
+                with self.lock:
+                    self.results.append((url, 'Failed to fetch'))
+        except Exception as e:
+            with self.lock:
+                self.results.append((url, f'Error: {e}'))
+
+    def start_scraping(self):
+        threads = []
+        for url in self.urls:
+            thread = threading.Thread(target=self.scrape_url, args=(url,))
+            threads.append(thread)
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+
+        return self.results
+
+
+# URLs to scrape
+urls = [
+    'https://example.com',
+    'https://www
