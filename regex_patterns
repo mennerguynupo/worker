@@ -1,0 +1,27 @@
+import rstr
+
+# 定义一些常见的正则表达式
+regex_patterns = {
+    "email": r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}",
+    "phone": r"\+?[1-9][0-9]{1,2}-[0-9]{3}-[0-9]{3}-[0-9]{4}",
+    "ipv4": r"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\."
+            r"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\."
+            r"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\."
+            r"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)",
+    "date": r"(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])",
+}
+
+# 生成随机样本
+def generate_samples(pattern_name, num_samples=5):
+    if pattern_name not in regex_patterns:
+        print(f"Pattern '{pattern_name}' not found.")
+        return
+    regex = regex_patterns[pattern_name]
+    samples = [rstr.xeger(regex) for _ in range(num_samples)]
+    return samples
+
+# 示例：生成不同类型的数据
+for key in regex_patterns:
+    print(f"\nRandom {key} samples:")
+    for sample in generate_samples(key):
+        print(sample)
