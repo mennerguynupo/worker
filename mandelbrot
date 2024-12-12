@@ -1,0 +1,23 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def mandelbrot(width, height, max_iter):
+    re = np.linspace(-2.0, 1.0, width)
+    im = np.linspace(-1.5, 1.5, height)
+    c = re[np.newaxis, :] + 1j * im[:, np.newaxis]
+    z = np.zeros_like(c)
+    div_time = np.zeros(c.shape, dtype=int)
+
+    for i in range(max_iter):
+        z = z**2 + c
+        diverged = np.abs(z) > 2
+        div_time[diverged & (div_time == 0)] = i
+        z[diverged] = 2  # 避免过度计算
+
+    return div_time
+
+image = mandelbrot(800, 800, 100)
+plt.imshow(image, cmap='hot', extent=(-2, 1, -1.5, 1.5))
+plt.colorbar()
+plt.title("Mandelbrot Set")
+plt.show()
