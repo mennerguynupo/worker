@@ -1,0 +1,10 @@
+### 6. **天气情绪模拟器**
+weather = 'rainy'
+if weather == 'rainy':
+    mood = 'Calm and reflective'
+elif weather == 'sunny':
+    mood = 'Bright and energetic'
+else:
+    mood = 'Neutral'
+
+print(f"Today's mood: {mood}")
