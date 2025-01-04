@@ -1,0 +1,10 @@
+@Service
+public class PaymentService {
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    @Transactional
+    public void processPayment(Payment payment) {
+        paymentRepository.save(payment);
+    }
+}
