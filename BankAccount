@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+
+class BankAccount {
+    double balance;
+public:
+    BankAccount(double initialBalance) : balance(initialBalance) {}
+    void deposit(double amount) { balance += amount; }
+    void withdraw(double amount) { balance -= amount; }
+    void display() { cout << "当前余额: $" << balance << endl; }
+};
+
+int main() {
+    BankAccount account(1000.0);
+    account.deposit(200);
+    account.withdraw(150);
+    account.display();
+    return 0;
+}
