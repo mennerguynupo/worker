@@ -1,0 +1,18 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    vector<int> arr1 = {1, 3, 5};
+    vector<int> arr2 = {2, 4, 6};
+
+    vector<int> result(arr1.size() + arr2.size());
+    merge(arr1.begin(), arr1.end(), arr2.begin(), arr2.end(), result.begin());
+
+    cout << "合并后的数组: ";
+    for (int num : result) cout << num << " ";
+    cout << endl;
+
+    return 0;
+}
