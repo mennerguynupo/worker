@@ -1,0 +1,31 @@
+import numpy as np
+
+class NeuralNetwork:
+    def __init__(self):
+        self.weights = np.random.rand(2, 1)
+        self.bias = np.random.rand(1)
+
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
+
+    def sigmoid_derivative(self, x):
+        return x * (1 - x)
+
+    def train(self, inputs, outputs, epochs=1000, lr=0.1):
+        for _ in range(epochs):
+            z = np.dot(inputs, self.weights) + self.bias
+            pred = self.sigmoid(z)
+            error = outputs - pred
+            adjustments = error * self.sigmoid_derivative(pred)
+            self.weights += np.dot(inputs.T, adjustments) * lr
+            self.bias += np.sum(adjustments) * lr
+
+    def predict(self, inputs):
+        return self.sigmoid(np.dot(inputs, self.weights) + self.bias)
+
+# Training example
+nn = NeuralNetwork()
+inputs = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+outputs = np.array([[0], [1], [1], [0]])
+nn.train(inputs, outputs)
+print(nn.predict(np.array([1, 0])))
