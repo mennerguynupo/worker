@@ -1,0 +1,24 @@
+from collections import defaultdict, deque
+
+def topological_sort(vertices, edges):
+    in_degree = {v: 0 for v in vertices}
+    for u, v in edges:
+        in_degree[v] += 1
+
+    queue = deque([v for v in vertices if in_degree[v] == 0])
+    result = []
+
+    while queue:
+        node = queue.popleft()
+        result.append(node)
+        for u, v in edges:
+            if u == node:
+                in_degree[v] -= 1
+                if in_degree[v] == 0:
+                    queue.append(v)
+
+    return result
+
+vertices = ['A', 'B', 'C', 'D', 'E']
+edges = [('A', 'C'), ('B', 'C'), ('C', 'D'), ('D', 'E')]
+print(topological_sort(vertices, edges))
