@@ -1,0 +1,14 @@
+# 创建哈希表
+hash_map = {}
+
+# 添加键值对
+hash_map['a'] = 1
+hash_map['b'] = 2
+
+# 查询键值对
+print(hash_map.get('a'))
+
+# 删除键值对
+del hash_map['b']
+
+print(hash_map)
