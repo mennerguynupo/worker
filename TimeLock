@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract TimeLock {
+    uint256 public releaseTime;
+    address public owner;
+
+    constructor(uint256 _releaseTime) {
+        require(_releaseTime > block.timestamp, "Release time must be in the future");
+        releaseTime = _releaseTime;
+        owner = msg.sender;
+    }
+
+    function withdraw() public {
+        require(block.timestamp >= releaseTime, "Funds are locked");
+        require(msg.sender == owner, "Not the owner");
+        payable(owner).transfer(address(this).balance);
+    }
+
+    receive() external payable {}
+}
