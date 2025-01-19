@@ -1,0 +1,2 @@
+sorted_data = data.sort_values(by='salary', ascending=False)  # 按工资降序排序
+print(sorted_data.head())
