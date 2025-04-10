@@ -1,0 +1,21 @@
+import Control.Monad.State
+
+type Stack = [Int]
+type StackOp a = State Stack a
+
+push :: Int -> StackOp ()
+push x = modify (x:)
+
+pop :: StackOp Int
+pop = do
+  (x:xs) <- get
+  put xs
+  return x
+
+addTopTwo :: StackOp ()
+addTopTwo = do
+  a <- pop
+  b <- pop
+  push (a + b)
+
+run = execState (push 3 >> push 4 >> addTopTwo) []
